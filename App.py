@@ -41,22 +41,45 @@ def validate_time(time):
     time_pattern = re.compile(r'^\d{2}:\d{2}$')
     return bool(time_pattern.match(time))
 
+def showEvents():
 
+    print("")
+    print("{:<15} | {:<30} | {:<15} | {:<10}".format("Title", "Description", "Date", "Time"))
+    print("-" * 80) 
+
+    if not events:
+        print("{:^80}".format("No events..."))
+
+    for event in events:
+        event.display_info()
+    print()
+
+def sort():
+    #sort events by date and time
+    events.sort(key=lambda event: (event.date, event.time))
+    
 
 def main():
     print("\033[35m" + "\033[1m" + "========== Event Scheduler ==========" + "\033[0m")
 
     while True:
         print("1. Add an event.")
+        print("2. Show events. ")
 
         try:
             opt = eval(input(" > "))
 
             if opt == 1:
                 addEvent()
+            
+            if opt == 2:
+                
+                sort()
+                showEvents()
         
         except Exception as e:
             print("Enter only the number option. \n", e)
 
-main()
-#print(validate_date("1"))
+
+if __name__ == "__main__":
+    main()
