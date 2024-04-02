@@ -58,6 +58,27 @@ def sort():
     #sort events by date and time
     events.sort(key=lambda event: (event.date, event.time))
     
+def deleteEvent(title):
+    
+    # count = 0
+    # for event in events:
+    #     if event.title == title:
+    #         count += 1
+    #         events.remove(event)
+    global events
+
+    original_count = len(events)
+    events = [event for event in events if event.title != title]
+    count = original_count - len(events)
+
+    
+    if count == 0:
+        print("\033[91mEvent does not exist....\033[0m \n")
+        return
+
+    print(count, " \033[92mEvent(s) successfully deleted.....\033[0m \n")
+
+
 
 def main():
     print("\033[35m" + "\033[1m" + "========== Event Scheduler ==========" + "\033[0m")
@@ -65,6 +86,7 @@ def main():
     while True:
         print("1. Add an event.")
         print("2. Show events. ")
+        print("3. Delete event")
 
         try:
             opt = eval(input(" > "))
@@ -76,6 +98,13 @@ def main():
                 
                 sort()
                 showEvents()
+
+            if opt == 3:
+                title = input("Event title to delete or 0 to cancel: ")
+                if title == '0':
+                    pass
+                else:
+                    deleteEvent(title)
         
         except Exception as e:
             print("Enter only the number option. \n", e)
