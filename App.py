@@ -27,19 +27,28 @@ def addEvent():
 
     print("\033[92mEvent successfully added.....\033[0m \n")
 
-
-
 def validate_date(date):
     # Regex pattern for date in YYYY-MM-DD format
+    #2024-04-03
 
     date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
-    return bool(date_pattern.match(date))
+    if bool(date_pattern.match(date)):
+        if ((int(date[0:4]) < 2024) or (int(date[5:7]) > 12) or (int(date[5:7]) < 1) or (int(date[8:11]) > 31) or (int(date[8:11]) < 1)):
+            return False 
+        return True 
+    
+    return False
 
 def validate_time(time):
     #Regex pattern for time in HH:MM format
 
     time_pattern = re.compile(r'^\d{2}:\d{2}$')
-    return bool(time_pattern.match(time))
+    if bool(time_pattern.match(time)):
+        if ((int(time[0:2]) > 24) or (int(time[0:2]) < 0) or (int(time[3:5]) > 59) or (int(time[3:5]) < 0)):
+            return False
+        return True
+    
+    return False
 
 def showEvents(events_lst):
 
@@ -59,12 +68,6 @@ def sort():
     events.sort(key=lambda event: (event.date, event.time))
     
 def deleteEvent(title):
-    
-    # count = 0
-    # for event in events:
-    #     if event.title == title:
-    #         count += 1
-    #         events.remove(event)
     global events
 
     original_count = len(events)
