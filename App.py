@@ -41,16 +41,16 @@ def validate_time(time):
     time_pattern = re.compile(r'^\d{2}:\d{2}$')
     return bool(time_pattern.match(time))
 
-def showEvents():
+def showEvents(events_lst):
 
     print("")
     print("{:<15} | {:<30} | {:<15} | {:<10}".format("Title", "Description", "Date", "Time"))
     print("-" * 80) 
 
-    if not events:
+    if not events_lst:
         print("{:^80}".format("No events..."))
 
-    for event in events:
+    for event in events_lst:
         event.display_info()
     print()
 
@@ -78,7 +78,14 @@ def deleteEvent(title):
 
     print(count, " \033[92mEvent(s) successfully deleted.....\033[0m \n")
 
+def search_withDate(date):
+    
+    events_with_date = []
+    for event in events:
+        if event.date == date:
+            events_with_date.append(event)
 
+    showEvents(events_with_date)
 
 def main():
     print("\033[35m" + "\033[1m" + "========== Event Scheduler ==========" + "\033[0m")
@@ -87,6 +94,7 @@ def main():
         print("1. Add an event.")
         print("2. Show events. ")
         print("3. Delete event")
+        print("4. Search")
 
         try:
             opt = eval(input(" > "))
@@ -97,7 +105,7 @@ def main():
             if opt == 2:
                 
                 sort()
-                showEvents()
+                showEvents(events)
 
             if opt == 3:
                 title = input("Event title to delete or 0 to cancel: ")
@@ -105,6 +113,14 @@ def main():
                     pass
                 else:
                     deleteEvent(title)
+
+            if opt == 4:
+                print("Search using: \n 1. Date \n 2. Title \n 3. Description \n Or 0 to cancel")
+                sel = input(">> ")
+
+                if sel == '1':
+                    date = input("Enter the date: ")
+                    search_withDate(date)
         
         except Exception as e:
             print("Enter only the number option. \n", e)
