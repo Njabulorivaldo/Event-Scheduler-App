@@ -31,7 +31,7 @@ def validate_date(date):
     # Regex pattern for date in YYYY-MM-DD format
     #2024-04-03
 
-    date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')
+    date_pattern = re.compile(r'^\d{4}-\d{2}-\d{2}$')       #pattern
     if bool(date_pattern.match(date)):
         if ((int(date[0:4]) < 2024) or (int(date[5:7]) > 12) or (int(date[5:7]) < 1) or (int(date[8:11]) > 31) or (int(date[8:11]) < 1)):
             return False 
@@ -41,8 +41,9 @@ def validate_date(date):
 
 def validate_time(time):
     #Regex pattern for time in HH:MM format
+    #00:00
 
-    time_pattern = re.compile(r'^\d{2}:\d{2}$')
+    time_pattern = re.compile(r'^\d{2}:\d{2}$')     #pattern
     if bool(time_pattern.match(time)):
         if ((int(time[0:2]) > 24) or (int(time[0:2]) < 0) or (int(time[3:5]) > 59) or (int(time[3:5]) < 0)):
             return False
@@ -73,8 +74,7 @@ def deleteEvent(title):
     original_count = len(events)
     events = [event for event in events if event.title != title]
     count = original_count - len(events)
-
-    
+   
     if count == 0:
         print("\033[91mEvent does not exist....\033[0m \n")
         return
@@ -142,7 +142,8 @@ def main():
                 elif sel == '2':
                     keyword = input("Enter keyword: ")
                     search_with_keyword(keyword)
-        
+
+
         except Exception as e:
             print("Enter only the number option. \n", e)
 
