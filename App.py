@@ -87,6 +87,17 @@ def search_withDate(date):
 
     showEvents(events_with_date)
 
+def search_with_keyword(word):
+
+    events_with_keyword = []
+
+    for event in events:
+        if (word.lower() in event.title.lower()) or (word.lower() in event.description.lower()):
+            events_with_keyword.append(event)
+
+    showEvents(events_with_keyword)
+
+
 def main():
     print("\033[35m" + "\033[1m" + "========== Event Scheduler ==========" + "\033[0m")
 
@@ -115,12 +126,19 @@ def main():
                     deleteEvent(title)
 
             if opt == 4:
-                print("Search using: \n 1. Date \n 2. Title \n 3. Description \n Or 0 to cancel")
+                print("Search using: \n 1. Date \n 2. Keyword \n Or 0 to cancel")
                 sel = input(">> ")
 
-                if sel == '1':
+                if sel == '0':
+                    pass
+
+                elif sel == '1':
                     date = input("Enter the date: ")
                     search_withDate(date)
+
+                elif sel == '2':
+                    keyword = input("Enter keyword: ")
+                    search_with_keyword(keyword)
         
         except Exception as e:
             print("Enter only the number option. \n", e)
